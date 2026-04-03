@@ -10,7 +10,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh}
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(108,99,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(108,99,255,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
-.container{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:40px 24px 80px}
+.container{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:40px 24px 80px}
 header{display:flex;align-items:center;gap:16px;margin-bottom:56px}
 .logo-mark{width:44px;height:44px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:white;flex-shrink:0}
 .logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:22px}
@@ -29,6 +29,9 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:56px}
 textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;line-height:1.7;padding:16px;resize:vertical;min-height:120px;outline:none;transition:border-color .2s}
 textarea::placeholder{color:var(--text-dim)}
 textarea:focus{border-color:var(--accent)}
+input[type=text],input[type=number]{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;padding:10px 14px;outline:none;transition:border-color .2s}
+input[type=text]:focus,input[type=number]:focus{border-color:var(--accent)}
+input[type=text]::placeholder,input[type=number]::placeholder{color:var(--text-dim)}
 .char-count{text-align:right;font-size:11px;color:var(--text-dim);margin-top:8px}
 .output-selector{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:24px}
 .output-option{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all .2s}
@@ -51,6 +54,8 @@ textarea:focus{border-color:var(--accent)}
 .result-title::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent3);display:inline-block;box-shadow:0 0 10px var(--accent3)}
 .btn-copy{font-family:'DM Mono',monospace;font-size:11px;padding:6px 14px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);cursor:pointer;transition:all .2s}
 .btn-copy:hover{border-color:var(--accent3);color:var(--accent3)}
+.btn-print{font-family:'DM Mono',monospace;font-size:11px;padding:6px 14px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);cursor:pointer;transition:all .2s;margin-left:8px}
+.btn-print:hover{border-color:var(--accent);color:var(--accent)}
 .result-content{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;font-size:13px;line-height:1.8;color:var(--text);white-space:pre-wrap;word-wrap:break-word}
 .section-header{font-family:'Syne',sans-serif;font-weight:700;color:var(--accent);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin:20px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
 .section-header:first-child{margin-top:0}
@@ -58,6 +63,61 @@ textarea:focus{border-color:var(--accent)}
 .error-box.visible{display:block}
 .footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text-dim)}
 .powered-by span{color:var(--accent)}
+
+/* One-pager specific fields */
+.onepager-fields{display:none;margin-top:20px}
+.onepager-fields.visible{display:block}
+.fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.field-group{display:flex;flex-direction:column;gap:6px}
+.field-group.full{grid-column:1/-1}
+.field-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted)}
+
+/* Milestone status selector */
+.milestone-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.milestone-row:last-child{border-bottom:none}
+.milestone-name{font-size:12px;color:var(--text);min-width:120px}
+.milestone-date{font-size:11px;color:var(--text-muted);min-width:80px}
+.semafor-group{display:flex;gap:8px}
+.semafor-btn{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);cursor:pointer;transition:all .2s;opacity:0.3}
+.semafor-btn.green{background:#22c55e}
+.semafor-btn.yellow{background:#eab308}
+.semafor-btn.red{background:#ef4444}
+.semafor-btn.active{opacity:1;border-color:white;transform:scale(1.2)}
+
+/* Progress bar */
+.progress-input-row{display:flex;align-items:center;gap:12px;margin-top:8px}
+.progress-bar-bg{flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));border-radius:4px;transition:width .3s}
+.progress-val{font-size:13px;font-weight:700;color:var(--accent3);min-width:40px;text-align:right}
+
+/* Status report output */
+.status-report{background:white;border-radius:12px;padding:32px;color:#1a1a2e;font-family:Arial,sans-serif}
+.sr-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+.sr-title{font-size:20px;font-weight:700;color:#1a1a2e}
+.sr-status-box{background:#1e3a5f;color:white;padding:12px 16px;border-radius:6px;text-align:center;font-size:11px;min-width:140px}
+.sr-status-date{font-size:14px;font-weight:700;margin-top:4px}
+.sr-milestones{background:#1e3a5f;color:white;padding:12px 20px;border-radius:6px;margin-bottom:16px;display:flex;align-items:center;gap:0}
+.sr-milestone-label{font-size:11px;font-weight:700;flex:0 0 140px}
+.sr-timeline{flex:1;position:relative;height:40px}
+.sr-line{position:absolute;top:50%;left:0;right:0;height:2px;background:#ef4444;transform:translateY(-50%)}
+.sr-today-line{position:absolute;top:0;bottom:0;width:2px;background:#9333ea;left:35%}
+.sr-ms-points{position:absolute;top:50%;left:0;right:0;display:flex;justify-content:space-between;transform:translateY(-50%)}
+.sr-ms-pt{width:10px;height:10px;background:#ef4444;border-radius:50%;transform:translateY(-50%);position:relative}
+.sr-ms-label{position:absolute;top:-28px;left:50%;transform:translateX(-50%);font-size:9px;white-space:nowrap;color:white}
+.sr-ms-date{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-size:8px;white-space:nowrap;color:#94a3b8}
+.sr-progress-box{display:flex;align-items:center;gap:12px;margin-left:16px}
+.sr-semafors{display:flex;gap:4px}
+.sr-dot{width:18px;height:18px;border-radius:50%;border:1px solid rgba(255,255,255,.3)}
+.sr-pct{background:#22c55e;color:white;font-weight:700;font-size:14px;padding:4px 12px;border-radius:4px;min-width:50px;text-align:center}
+.sr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.sr-cell{border:1px solid #cbd5e1;border-radius:6px;overflow:hidden}
+.sr-cell-header{background:#1e3a5f;color:white;font-size:12px;font-weight:700;padding:8px 14px;text-align:center}
+.sr-cell-body{padding:14px;min-height:100px;font-size:12px;line-height:1.7;color:#1a1a2e}
+.sr-cell-body ul{list-style:none;padding:0}
+.sr-cell-body ul li{padding:3px 0;padding-left:16px;position:relative}
+.sr-cell-body ul li::before{content:'○';position:absolute;left:0;color:#64748b;font-size:10px}
+.sr-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:9px;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:8px}
+.sr-logo{font-weight:700;color:#1e3a5f;font-size:12px}
 </style>
 </head>
 <body>
@@ -71,6 +131,7 @@ textarea:focus{border-color:var(--accent)}
     <h1>Business Analysis<br><span class="highlight">on demand.</span></h1>
     <p>Describe your business problem. Get a structured BA analysis in seconds.</p>
   </div>
+
   <div class="input-card">
     <span class="input-label">Industry context</span>
     <div class="industry-row">
@@ -81,70 +142,346 @@ textarea:focus{border-color:var(--accent)}
       <button class="industry-chip" onclick="selectIndustry(this,'Healthcare')">🏥 Healthcare</button>
       <button class="industry-chip" onclick="selectIndustry(this,'Technology')">💻 Technology</button>
     </div>
-    <span class="input-label">Describe your business problem</span>
-    <textarea id="problemInput" placeholder="Ex: We have 4 production sites across Europe that use different systems for tracking defects..." oninput="updateCharCount()" maxlength="2000"></textarea>
-    <div class="char-count"><span id="charCount">0</span> / 2000</div>
+
+    <!-- Standard problem input -->
+    <div id="standardInput">
+      <span class="input-label">Describe your business problem</span>
+      <textarea id="problemInput" placeholder="Ex: We have 4 production sites across Europe that use different systems for tracking defects..." oninput="updateCharCount()" maxlength="2000"></textarea>
+      <div class="char-count"><span id="charCount">0</span> / 2000</div>
+    </div>
+
+    <!-- One-pager specific fields -->
+    <div class="onepager-fields" id="onepagerFields">
+      <div class="fields-grid">
+        <div class="field-group">
+          <span class="field-label">Project ID</span>
+          <input type="text" id="projectId" placeholder="PRJ-00006188">
+        </div>
+        <div class="field-group">
+          <span class="field-label">Project Name</span>
+          <input type="text" id="projectName" placeholder="CAR & Audit">
+        </div>
+        <div class="field-group">
+          <span class="field-label">ITEA Action Field Owner</span>
+          <input type="text" id="projectOwner" placeholder="John Smith">
+        </div>
+        <div class="field-group">
+          <span class="field-label">Overall Progress %</span>
+          <input type="number" id="progressPct" min="0" max="100" value="30" oninput="updateProgressBar()">
+          <div class="progress-input-row">
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill" style="width:30%"></div></div>
+            <div class="progress-val" id="progressVal">30%</div>
+          </div>
+        </div>
+      </div>
+
+      <span class="field-label" style="margin-bottom:12px;display:block">Project Status (semafoare)</span>
+      <div id="milestoneRows" style="background:var(--surface2);border-radius:10px;padding:16px;margin-bottom:16px">
+        <!-- generated by JS -->
+      </div>
+
+      <div class="fields-grid">
+        <div class="field-group full">
+          <span class="field-label">Overall Progress / Key Achievements</span>
+          <textarea id="achievements" placeholder="- Workshop completed&#10;- Business analysis done&#10;- Key documents collected" style="min-height:90px"></textarea>
+        </div>
+        <div class="field-group full">
+          <span class="field-label">Next Steps</span>
+          <textarea id="nextSteps" placeholder="- Internal review for CAR & Audit&#10;- Sign off workshop document" style="min-height:90px"></textarea>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Decisions Required</span>
+          <textarea id="decisions" placeholder="- No decision required at this stage" style="min-height:70px"></textarea>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Critical Issues</span>
+          <textarea id="criticalIssues" placeholder="- No critical issues" style="min-height:70px"></textarea>
+        </div>
+      </div>
+    </div>
   </div>
+
   <div class="output-selector">
     <div class="output-option selected" onclick="selectOutput(this,'full')"><span class="opt-icon">📋</span><span class="opt-name">Full Analysis</span><span class="opt-desc">Gap + RACI + requirements + stories</span></div>
     <div class="output-option" onclick="selectOutput(this,'gap')"><span class="opt-icon">🔍</span><span class="opt-name">Gap Analysis</span><span class="opt-desc">As-Is vs To-Be + pain points</span></div>
     <div class="output-option" onclick="selectOutput(this,'raci')"><span class="opt-icon">👥</span><span class="opt-name">RACI Matrix</span><span class="opt-desc">Roles & responsibilities</span></div>
     <div class="output-option" onclick="selectOutput(this,'stories')"><span class="opt-icon">📝</span><span class="opt-name">User Stories</span><span class="opt-desc">Agile-ready + acceptance criteria</span></div>
-    <div class="output-option" onclick="selectOutput(this,'onepager')"><span class="opt-icon">⚡</span><span class="opt-name">One-Pager</span><span class="opt-desc">Executive summary</span></div>
+    <div class="output-option" onclick="selectOutput(this,'onepager')"><span class="opt-icon">⚡</span><span class="opt-name">Status Report</span><span class="opt-desc">Weekly one-pager</span></div>
   </div>
-  <button class="btn-generate" id="generateBtn" onclick="generateAnalysis()">⚡ Generate BA Analysis</button>
+
+  <button class="btn-generate" id="generateBtn" onclick="generateAnalysis()">⚡ Generate</button>
+
   <div class="loading-state" id="loadingState">
     <div class="spinner"></div>
-    <div class="loading-text" id="loadingText">Analyzing your business problem...</div>
+    <div class="loading-text" id="loadingText">Generating your report...</div>
   </div>
+
   <div class="error-box" id="errorBox"></div>
+
   <div class="result-container" id="resultContainer">
     <div class="result-header">
-      <div class="result-title">Analysis Complete</div>
-      <button class="btn-copy" onclick="copyResult()">Copy</button>
+      <div class="result-title">Done</div>
+      <div>
+        <button class="btn-copy" onclick="copyResult()">Copy</button>
+        <button class="btn-print" id="printBtn" style="display:none" onclick="printReport()">Print / PDF</button>
+      </div>
     </div>
     <div class="result-content" id="resultContent"></div>
   </div>
+
   <div class="footer">
     <div>© 2025 ba.ai — proof of concept</div>
     <div class="powered-by">Powered by <span>Claude API</span></div>
   </div>
 </div>
+
 <script>
-let selectedIndustry='Automotive',selectedOutput='full';
-function selectIndustry(el,industry){document.querySelectorAll('.industry-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');selectedIndustry=industry}
-function selectOutput(el,type){document.querySelectorAll('.output-option').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');selectedOutput=type}
-function updateCharCount(){document.getElementById('charCount').textContent=document.getElementById('problemInput').value.length}
-function copyResult(){navigator.clipboard.writeText(document.getElementById('resultContent').innerText).then(()=>{const btn=document.querySelector('.btn-copy');btn.textContent='Copied ✓';setTimeout(()=>btn.textContent='Copy',2000)})}
-function getSystemPrompt(){const p={full:`You are a senior Business Analyst with 15+ years in ${selectedIndustry}. Analyze and produce: EXECUTIVE SUMMARY, AS-IS STATE, TO-BE STATE, GAP ANALYSIS, STAKEHOLDER MAP & RACI, FUNCTIONAL REQUIREMENTS (FR-01 format), USER STORIES (As a/I want/So that + criteria), RISKS & DEPENDENCIES, NEXT STEPS. Be specific, no fluff.`,gap:`Senior BA in ${selectedIndustry}. Gap analysis: PROBLEM STATEMENT, AS-IS STATE, TO-BE STATE, GAP TABLE (gap|impact H/M/L|effort H/M/L|priority), ROOT CAUSES, APPROACH.`,raci:`Senior BA in ${selectedIndustry}. RACI: SCOPE, STAKEHOLDERS, RACI MATRIX, KEY DECISIONS, ESCALATION PATH.`,stories:`Senior BA in ${selectedIndustry}. User stories: EPIC, PERSONAS, 5-7 STORIES (ID, As a/I want/So that, Acceptance Criteria, Points, MoSCoW).`,onepager:`Senior BA in ${selectedIndustry}. One-pager: PROBLEM, IMPACT, SOLUTION, BENEFITS, INVESTMENT, KPIs, TIMELINE, RECOMMENDATION. Plain language.`};return p[selectedOutput]}
+let selectedIndustry='Automotive', selectedOutput='full';
+
+const milestones=[
+  {name:'Kick-off', date:'Jan 2026'},
+  {name:'Business req', date:'Feb 2026'},
+  {name:'Sign off', date:'March 2026'},
+  {name:'Dev', date:'Apr 2026'},
+  {name:'Testing', date:'Nov 2026'},
+  {name:'TDB', date:'TBD'},
+  {name:'TBD', date:'TBD'}
+];
+
+const msStatus={};
+milestones.forEach(m => msStatus[m.name]='green');
+
+function buildMilestoneRows(){
+  const container=document.getElementById('milestoneRows');
+  container.innerHTML='';
+  milestones.forEach(m=>{
+    const row=document.createElement('div');
+    row.className='milestone-row';
+    row.innerHTML=`
+      <div class="milestone-name">${m.name}</div>
+      <div class="milestone-date">${m.date}</div>
+      <div class="semafor-group">
+        <div class="semafor-btn green ${msStatus[m.name]==='green'?'active':''}" onclick="setMs('${m.name}','green',this)"></div>
+        <div class="semafor-btn yellow ${msStatus[m.name]==='yellow'?'active':''}" onclick="setMs('${m.name}','yellow',this)"></div>
+        <div class="semafor-btn red ${msStatus[m.name]==='red'?'active':''}" onclick="setMs('${m.name}','red',this)"></div>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function setMs(name, color, el){
+  msStatus[name]=color;
+  el.closest('.semafor-group').querySelectorAll('.semafor-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function updateProgressBar(){
+  const val=Math.min(100,Math.max(0,parseInt(document.getElementById('progressPct').value)||0));
+  document.getElementById('progressFill').style.width=val+'%';
+  document.getElementById('progressVal').textContent=val+'%';
+}
+
+function selectIndustry(el,industry){
+  document.querySelectorAll('.industry-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active'); selectedIndustry=industry;
+}
+
+function selectOutput(el,type){
+  document.querySelectorAll('.output-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected'); selectedOutput=type;
+  const isOnepager=type==='onepager';
+  document.getElementById('standardInput').style.display=isOnepager?'none':'block';
+  document.getElementById('onepagerFields').classList.toggle('visible',isOnepager);
+  if(isOnepager) buildMilestoneRows();
+}
+
+function updateCharCount(){
+  document.getElementById('charCount').textContent=document.getElementById('problemInput').value.length;
+}
+
+function copyResult(){
+  navigator.clipboard.writeText(document.getElementById('resultContent').innerText).then(()=>{
+    const btn=document.querySelector('.btn-copy');
+    btn.textContent='Copied ✓'; setTimeout(()=>btn.textContent='Copy',2000);
+  });
+}
+
+function printReport(){
+  const content=document.getElementById('resultContent').innerHTML;
+  const win=window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><title>Status Report</title>
+  <style>body{margin:0;padding:20px;font-family:Arial,sans-serif;background:white}
+  @media print{body{padding:0}}</style></head>
+  <body>${content}<script>window.onload=()=>window.print()<\/script></body></html>`);
+  win.document.close();
+}
+
+function getSystemPrompt(){
+  const p={
+    full:`You are a senior Business Analyst with 15+ years in ${selectedIndustry}. Analyze and produce: EXECUTIVE SUMMARY, AS-IS STATE, TO-BE STATE, GAP ANALYSIS, STAKEHOLDER MAP & RACI, FUNCTIONAL REQUIREMENTS (FR-01 format), USER STORIES (As a/I want/So that + criteria), RISKS & DEPENDENCIES, NEXT STEPS. Be specific, no fluff.`,
+    gap:`Senior BA in ${selectedIndustry}. Gap analysis: PROBLEM STATEMENT, AS-IS STATE, TO-BE STATE, GAP TABLE (gap|impact H/M/L|effort H/M/L|priority), ROOT CAUSES, APPROACH.`,
+    raci:`Senior BA in ${selectedIndustry}. RACI: SCOPE, STAKEHOLDERS, RACI MATRIX, KEY DECISIONS, ESCALATION PATH.`,
+    stories:`Senior BA in ${selectedIndustry}. User stories: EPIC, PERSONAS, 5-7 STORIES (ID, As a/I want/So that, Acceptance Criteria, Points, MoSCoW).`,
+    onepager:`You are a project status report assistant. Based on the data provided, generate polished bullet points for each section of a weekly status report. Return ONLY a JSON object with these exact keys: achievements (array of strings), nextSteps (array of strings), decisions (array of strings), criticalIssues (array of strings). Enhance and professionalize the text provided by the user. Keep bullets concise and professional. Return only valid JSON, no markdown, no extra text.`
+  };
+  return p[selectedOutput];
+}
+
 const loadMsgs=['Parsing problem statement...','Identifying stakeholders & gaps...','Structuring requirements...','Generating deliverables...'];
-let msgIdx=0,msgTimer=null;
-function cycleMsgs(){document.getElementById('loadingText').textContent=loadMsgs[msgIdx%loadMsgs.length];msgIdx++;msgTimer=setTimeout(cycleMsgs,1800)}
+let msgIdx=0, msgTimer=null;
+function cycleMsgs(){
+  document.getElementById('loadingText').textContent=loadMsgs[msgIdx%loadMsgs.length];
+  msgIdx++; msgTimer=setTimeout(cycleMsgs,1800);
+}
+
+function getTodayStr(){
+  const d=new Date();
+  return `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
+}
+
+function buildStatusReport(data){
+  const pct=parseInt(document.getElementById('progressPct').value)||0;
+  const projectId=document.getElementById('projectId').value||'PRJ-XXXXX';
+  const projectName=document.getElementById('projectName').value||'Project Name';
+  const owner=document.getElementById('projectOwner').value||'TBD';
+
+  const colorMap={green:'#22c55e',yellow:'#eab308',red:'#ef4444',none:'#374151'};
+  
+  // Overall status = worst color
+  const statuses=Object.values(msStatus);
+  const overallColor=statuses.includes('red')?'#ef4444':statuses.includes('yellow')?'#eab308':'#22c55e';
+
+  const msHtml=milestones.map((m,i)=>{
+    const col=colorMap[msStatus[m.name]]||'#ef4444';
+    const left=Math.round((i/(milestones.length-1))*100);
+    return `<div style="position:absolute;left:${left}%;transform:translateX(-50%);top:50%;margin-top:-5px">
+      <div style="width:10px;height:10px;background:${col};border-radius:50%;position:relative">
+        <div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-size:8px;white-space:nowrap;color:white">${m.name}</div>
+        <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);font-size:7px;white-space:nowrap;color:#94a3b8">${m.date}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const toUl=arr=>arr.map(s=>`<li>${s}</li>`).join('');
+
+  return `<div class="status-report">
+    <div class="sr-header">
+      <div class="sr-title">${projectId} - ${projectName}</div>
+      <div class="sr-status-box">
+        <div>ITEA Action Field Owner</div>
+        <div style="font-size:11px;margin-top:2px">${owner}</div>
+        <div style="margin-top:6px;font-size:10px">Status as of:</div>
+        <div class="sr-status-date">${getTodayStr()}</div>
+      </div>
+    </div>
+    <div class="sr-milestones">
+      <div class="sr-milestone-label">Project milestones</div>
+      <div class="sr-timeline" style="position:relative;flex:1;height:50px;margin:0 16px">
+        <div style="position:absolute;top:50%;left:0;right:0;height:2px;background:#ef4444;transform:translateY(-50%)"></div>
+        <div style="position:absolute;top:0;bottom:0;left:35%;width:2px;background:#9333ea"></div>
+        <div style="position:absolute;top:2px;left:36%;font-size:8px;color:#c4b5fd">TODAY</div>
+        <div style="position:absolute;top:0;left:0;right:0;height:50px">${msHtml}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+        <div style="display:flex;gap:4px">
+          <div style="width:16px;height:16px;border-radius:50%;background:${overallColor};border:1px solid rgba(255,255,255,.3)"></div>
+          <div style="width:16px;height:16px;border-radius:50%;background:#374151;border:1px solid rgba(255,255,255,.3)"></div>
+          <div style="width:16px;height:16px;border-radius:50%;background:#374151;border:1px solid rgba(255,255,255,.3)"></div>
+        </div>
+        <div style="background:${overallColor};color:white;font-weight:700;font-size:14px;padding:4px 10px;border-radius:4px">${pct}%</div>
+      </div>
+    </div>
+    <div class="sr-grid">
+      <div class="sr-cell">
+        <div class="sr-cell-header">Overall Progress / Key achievements</div>
+        <div class="sr-cell-body"><ul>${toUl(data.achievements)}</ul></div>
+      </div>
+      <div class="sr-cell">
+        <div class="sr-cell-header">Next steps</div>
+        <div class="sr-cell-body"><ul>${toUl(data.nextSteps)}</ul></div>
+      </div>
+      <div class="sr-cell">
+        <div class="sr-cell-header">Decisions required</div>
+        <div class="sr-cell-body"><ul>${toUl(data.decisions)}</ul></div>
+      </div>
+      <div class="sr-cell">
+        <div class="sr-cell-header">Critical issues</div>
+        <div class="sr-cell-body"><ul>${toUl(data.criticalIssues)}</ul></div>
+      </div>
+    </div>
+    <div class="sr-footer">
+      <div>All rights reserved | Copyright © | Commercially Confidential &nbsp;&nbsp; INTERNAL</div>
+      <div class="sr-logo">DELIVERING INNOVATION™</div>
+    </div>
+  </div>`;
+}
+
 async function generateAnalysis(){
-  const problem=document.getElementById('problemInput').value.trim();
-  if(problem.length<20){showError('Please describe your problem in more detail.');return}
+  let problem='';
+  
+  if(selectedOutput==='onepager'){
+    const achievements=document.getElementById('achievements').value.trim();
+    const nextSteps=document.getElementById('nextSteps').value.trim();
+    const decisions=document.getElementById('decisions').value.trim();
+    const issues=document.getElementById('criticalIssues').value.trim();
+    if(!achievements){showError('Please fill in at least the Key Achievements field.');return;}
+    problem=`Achievements: ${achievements}\nNext Steps: ${nextSteps}\nDecisions: ${decisions}\nCritical Issues: ${issues}`;
+  } else {
+    problem=document.getElementById('problemInput').value.trim();
+    if(problem.length<20){showError('Please describe your problem in more detail.');return;}
+  }
+
   document.getElementById('generateBtn').disabled=true;
   document.getElementById('loadingState').classList.add('visible');
   document.getElementById('resultContainer').classList.remove('visible');
   document.getElementById('errorBox').classList.remove('visible');
-  msgIdx=0;cycleMsgs();
+  msgIdx=0; cycleMsgs();
+
   try{
-    const r=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,system:getSystemPrompt(),messages:[{role:'user',content:`Industry: ${selectedIndustry}\n\nBusiness Problem:\n${problem}`}]})});
+    const r=await fetch('/api/analyze',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1500,
+        system:getSystemPrompt(),
+        messages:[{role:'user',content:`Industry: ${selectedIndustry}\n\n${problem}`}]
+      })
+    });
     clearTimeout(msgTimer);
     if(!r.ok){const e=await r.json();throw new Error(e.error?.message||'API error')}
     const d=await r.json();
     const txt=d.content.map(b=>b.text||'').join('');
-    displayResult(txt);
-  }catch(e){clearTimeout(msgTimer);showError(e.message)}
-  finally{document.getElementById('generateBtn').disabled=false;document.getElementById('loadingState').classList.remove('visible')}
+
+    if(selectedOutput==='onepager'){
+      const clean=txt.replace(/```json|```/g,'').trim();
+      const parsed=JSON.parse(clean);
+      document.getElementById('resultContent').innerHTML=buildStatusReport(parsed);
+      document.getElementById('printBtn').style.display='inline-block';
+    } else {
+      const styled=txt
+        .replace(/^#{1,3} (.+)$/gm,'<div class="section-header">$1</div>')
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+      document.getElementById('resultContent').innerHTML=styled;
+      document.getElementById('printBtn').style.display='none';
+    }
+    document.getElementById('resultContainer').classList.add('visible');
+    document.getElementById('resultContainer').scrollIntoView({behavior:'smooth'});
+  }catch(e){
+    clearTimeout(msgTimer);
+    showError(e.message);
+  }finally{
+    document.getElementById('generateBtn').disabled=false;
+    document.getElementById('loadingState').classList.remove('visible');
+  }
 }
-function displayResult(text){
-  const styled=text.replace(/^#{1,3} (.+)$/gm,'<div class="section-header">$1</div>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
-  document.getElementById('resultContent').innerHTML=styled;
-  document.getElementById('resultContainer').classList.add('visible');
-  document.getElementById('resultContainer').scrollIntoView({behavior:'smooth'});
+
+function showError(msg){
+  const el=document.getElementById('errorBox');
+  el.textContent='Error: '+msg;
+  el.classList.add('visible');
 }
-function showError(msg){const el=document.getElementById('errorBox');el.textContent='Error: '+msg;el.classList.add('visible')}
 </script>
 </body>
 </html>

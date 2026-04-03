@@ -346,7 +346,25 @@ async function loadProjects(){
   (d.projects||[]).forEach(p=>{
     const c=document.createElement('div');
     c.className='pcard';
-    c.innerHTML=`<div class="pid">${p.project_id}</div><div class="pname">${p.project_name}</div><div class="pscope">${p.scope||'—'}</div><div class="phint">Open →</div>`;
+    const last=p.lastReport;
+    let semafor='';
+    let pctBadge='';
+    if(last){
+      const ms=last.milestone_status||{};
+      const statuses=Object.values(ms);
+      const oc=statuses.includes('red')?'#ef4444':statuses.includes('yellow')?'#eab308':'#22c55e';
+      const pct=last.progress_pct||0;
+      semafor=`<div style="display:flex;align-items:center;gap:6px;margin-top:12px">
+        <div style="width:12px;height:12px;border-radius:50%;background:${oc};box-shadow:0 0 6px ${oc}"></div>
+        <div style="width:12px;height:12px;border-radius:50%;background:#374151"></div>
+        <div style="width:12px;height:12px;border-radius:50%;background:#374151"></div>
+        <div style="font-size:11px;color:#fff;font-weight:700;background:${oc};padding:2px 8px;border-radius:4px;margin-left:4px">${pct}%</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-left:4px">${last.report_date}</div>
+      </div>`;
+    }else{
+      semafor=`<div style="margin-top:12px;font-size:11px;color:var(--text-dim)">No reports yet</div>`;
+    }
+    c.innerHTML=`<div class="pid">${p.project_id}</div><div class="pname">${p.project_name}</div><div class="pscope">${p.scope||'—'}</div>${semafor}<div class="phint" style="margin-top:8px">Open →</div>`;
     c.onclick=()=>openProject(p);
     g.appendChild(c);
   });
@@ -387,12 +405,21 @@ async function loadHistory(){
   const d=await r.json();
   const list=document.getElementById('hlist');
   if(!d.reports||d.reports.length===0){list.innerHTML='<div class="hempty">No reports yet.</div>';return;}
-  list.innerHTML=d.reports.map(rep=>`
-    <div class="hitem">
+  list.innerHTML=d.reports.map(rep=>{
+    const ms=rep.milestone_status||{};
+    const statuses=Object.values(ms);
+    const oc=statuses.includes('red')?'#ef4444':statuses.includes('yellow')?'#eab308':'#22c55e';
+    return`<div class="hitem">
       <div class="hdate">${rep.report_date}</div>
+      <div style="display:flex;align-items:center;gap:4px">
+        <div style="width:10px;height:10px;border-radius:50%;background:${oc};box-shadow:0 0 5px ${oc}"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#374151"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#374151"></div>
+      </div>
       <div class="hpct">${rep.progress_pct}%</div>
       <div class="hprev">${rep.achievements||'—'}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 // TOOL & INDUSTRY

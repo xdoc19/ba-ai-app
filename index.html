@@ -91,33 +91,28 @@ input[type=text]::placeholder,input[type=number]::placeholder{color:var(--text-d
 .progress-val{font-size:13px;font-weight:700;color:var(--accent3);min-width:40px;text-align:right}
 
 /* Status report output */
-.status-report{background:white;border-radius:12px;padding:32px;color:#1a1a2e;font-family:Arial,sans-serif}
-.sr-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
-.sr-title{font-size:20px;font-weight:700;color:#1a1a2e}
-.sr-status-box{background:#1e3a5f;color:white;padding:12px 16px;border-radius:6px;text-align:center;font-size:11px;min-width:140px}
-.sr-status-date{font-size:14px;font-weight:700;margin-top:4px}
-.sr-milestones{background:#1e3a5f;color:white;padding:12px 20px;border-radius:6px;margin-bottom:16px;display:flex;align-items:center;gap:0}
-.sr-milestone-label{font-size:11px;font-weight:700;flex:0 0 140px}
+.status-report{background:white;border-radius:12px;padding:24px;color:#1a1a2e;font-family:Arial,sans-serif}
+.sr-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.sr-title{font-size:18px;font-weight:700;color:#1a1a2e;padding-top:4px}
+.sr-status-box{background:#1e3a5f;color:white;padding:10px 14px;border-radius:6px;text-align:center;font-size:11px;min-width:140px}
+.sr-status-date{font-size:13px;font-weight:700;margin-top:4px}
+.sr-milestones{background:#1e3a5f;color:white;padding:10px 16px;border-radius:6px;margin-bottom:12px;display:flex;align-items:center;gap:0}
+.sr-milestone-label{font-size:11px;font-weight:700;flex:0 0 130px}
 .sr-timeline{flex:1;position:relative;height:40px}
-.sr-line{position:absolute;top:50%;left:0;right:0;height:2px;background:#ef4444;transform:translateY(-50%)}
-.sr-today-line{position:absolute;top:0;bottom:0;width:2px;background:#9333ea;left:35%}
-.sr-ms-points{position:absolute;top:50%;left:0;right:0;display:flex;justify-content:space-between;transform:translateY(-50%)}
-.sr-ms-pt{width:10px;height:10px;background:#ef4444;border-radius:50%;transform:translateY(-50%);position:relative}
-.sr-ms-label{position:absolute;top:-28px;left:50%;transform:translateX(-50%);font-size:9px;white-space:nowrap;color:white}
-.sr-ms-date{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-size:8px;white-space:nowrap;color:#94a3b8}
-.sr-progress-box{display:flex;align-items:center;gap:12px;margin-left:16px}
+.sr-progress-box{display:flex;align-items:center;gap:8px;margin-left:12px;flex-shrink:0}
 .sr-semafors{display:flex;gap:4px}
-.sr-dot{width:18px;height:18px;border-radius:50%;border:1px solid rgba(255,255,255,.3)}
-.sr-pct{background:#22c55e;color:white;font-weight:700;font-size:14px;padding:4px 12px;border-radius:4px;min-width:50px;text-align:center}
-.sr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.sr-cell{border:1px solid #cbd5e1;border-radius:6px;overflow:hidden}
-.sr-cell-header{background:#1e3a5f;color:white;font-size:12px;font-weight:700;padding:8px 14px;text-align:center}
-.sr-cell-body{padding:14px;min-height:100px;font-size:12px;line-height:1.7;color:#1a1a2e}
-.sr-cell-body ul{list-style:none;padding:0}
-.sr-cell-body ul li{padding:3px 0;padding-left:16px;position:relative}
-.sr-cell-body ul li::before{content:'○';position:absolute;left:0;color:#64748b;font-size:10px}
-.sr-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:9px;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:8px}
-.sr-logo{font-weight:700;color:#1e3a5f;font-size:12px}
+.sr-dot{width:16px;height:16px;border-radius:50%;border:1px solid rgba(255,255,255,.3)}
+.sr-pct{color:white;font-weight:700;font-size:13px;padding:3px 10px;border-radius:4px;min-width:46px;text-align:center}
+.sr-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.sr-cell{border:1px solid #cbd5e1;border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
+.sr-cell-header{background:#1e3a5f;color:white;font-size:11px;font-weight:700;padding:7px 12px;text-align:center;flex-shrink:0}
+.sr-cell-body{padding:12px;min-height:90px;font-size:11px;line-height:1.7;color:#1a1a2e;flex:1}
+.sr-cell-body ul{list-style:none;padding:0;margin:0}
+.sr-cell-body ul li{padding:2px 0;padding-left:14px;position:relative}
+.sr-cell-body ul li::before{content:'○';position:absolute;left:0;color:#64748b;font-size:9px;top:3px}
+.sr-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:9px;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:8px}
+.sr-logo{font-weight:700;color:#1e3a5f;font-size:11px;display:flex;align-items:center;gap:6px}
+.sr-logo-square{width:28px;height:28px;background:#1e3a5f;border-radius:3px;display:flex;align-items:center;justify-content:center;color:white;font-size:9px;font-weight:700;letter-spacing:-0.5px}
 </style>
 </head>
 <body>
@@ -411,8 +406,11 @@ function buildStatusReport(data){
       </div>
     </div>
     <div class="sr-footer">
-      <div>All rights reserved | Copyright © | Commercially Confidential &nbsp;&nbsp; INTERNAL</div>
-      <div class="sr-logo">DELIVERING INNOVATION™</div>
+      <div>All rights reserved | Copyright © | Commercially Confidential &nbsp;&nbsp;&nbsp; INTERNAL</div>
+      <div class="sr-logo">
+        DELIVERING INNOVATION™
+        <div class="sr-logo-square">Li</div>
+      </div>
     </div>
   </div>`;
 }

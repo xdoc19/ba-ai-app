@@ -94,8 +94,8 @@ input[type=text]::placeholder,input[type=number]::placeholder{color:var(--text-d
 .status-report{background:white;border-radius:12px;padding:24px;color:#1a1a2e;font-family:Arial,sans-serif}
 .sr-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
 .sr-title{font-size:18px;font-weight:700;color:#1a1a2e;padding-top:4px}
-.sr-status-box{background:#1e3a5f;color:white;padding:10px 14px;border-radius:6px;text-align:center;font-size:11px;min-width:140px}
-.sr-status-date{font-size:13px;font-weight:700;margin-top:4px}
+.sr-status-box{background:#1e3a5f;color:white;padding:8px 14px;border-radius:6px;text-align:center;font-size:11px;min-width:140px;line-height:1.6}
+.sr-status-date{font-size:13px;font-weight:700;margin-top:2px}
 .sr-milestones{background:#1e3a5f;color:white;padding:10px 16px;border-radius:6px;margin-bottom:12px;display:flex;align-items:center;gap:0}
 .sr-milestone-label{font-size:11px;font-weight:700;flex:0 0 130px}
 .sr-timeline{flex:1;position:relative;height:40px}
@@ -364,9 +364,9 @@ function buildStatusReport(data){
     <div class="sr-header">
       <div class="sr-title">${projectId} - ${projectName}</div>
       <div class="sr-status-box">
-        <div>ITEA Action Field Owner</div>
-        <div style="font-size:11px;margin-top:2px">${owner}</div>
-        <div style="margin-top:6px;font-size:10px">Status as of:</div>
+        <div style="font-size:10px">ITEA Action Field Owner</div>
+        <div style="font-size:11px;font-weight:600">${owner}</div>
+        <div style="font-size:10px;margin-top:4px">Status as of:</div>
         <div class="sr-status-date">${getTodayStr()}</div>
       </div>
     </div>

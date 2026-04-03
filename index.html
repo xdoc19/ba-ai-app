@@ -318,7 +318,7 @@ function getSystemPrompt(){
     gap:`Senior BA in ${selectedIndustry}. Gap analysis: PROBLEM STATEMENT, AS-IS STATE, TO-BE STATE, GAP TABLE (gap|impact H/M/L|effort H/M/L|priority), ROOT CAUSES, APPROACH.`,
     raci:`Senior BA in ${selectedIndustry}. RACI: SCOPE, STAKEHOLDERS, RACI MATRIX, KEY DECISIONS, ESCALATION PATH.`,
     stories:`Senior BA in ${selectedIndustry}. User stories: EPIC, PERSONAS, 5-7 STORIES (ID, As a/I want/So that, Acceptance Criteria, Points, MoSCoW).`,
-    onepager:`You are a project status report assistant. Based on the data provided, generate polished bullet points for each section of a weekly status report. Return ONLY a JSON object with these exact keys: achievements (array of strings), nextSteps (array of strings), decisions (array of strings), criticalIssues (array of strings). Enhance and professionalize the text provided by the user. Keep bullets concise and professional. Return only valid JSON, no markdown, no extra text.`
+    onepager:`You are a project status report assistant. The user provides raw notes for each section. Your job is to format them as clean bullet points but keep the EXACT meaning and content — do NOT invent or add information. If the user writes "yes", return ["yes"]. If they write a short phrase, clean it up slightly but preserve the meaning. Return ONLY a valid JSON object with these exact keys: achievements (array of strings), nextSteps (array of strings), decisions (array of strings), criticalIssues (array of strings). No markdown, no extra text, only JSON.`
   };
   return p[selectedOutput];
 }

@@ -37,14 +37,14 @@ export default async function handler(req, res) {
     return res.json({ projects })
   }
 
-  if (action === 'save_project') {
-    const { user_id, project_id, project_name, scope } = req.body
-    const { data, error } = await supabase
-      .from('projects').insert({ user_id, project_id, project_name, scope })
-      .select().single()
-    if (error) return res.status(500).json({ error })
-    return res.json({ project: data })
-  }
+if (action === 'save_project') {
+  const { user_id, project_id, project_name, scope, status } = req.body
+  const { data, error } = await supabase
+    .from('projects').insert({ user_id, project_id, project_name, scope, status })
+    .select().single()
+  if (error) return res.status(500).json({ error })
+  return res.json({ project: data })
+}
 
   if (action === 'reports') {
     const { project_id } = req.body

@@ -296,6 +296,15 @@ textarea::placeholder{color:var(--text-dim)}
     <div class="mf"><label>Project ID</label><input type="text" id="mId" placeholder="PRJ-00006188"></div>
     <div class="mf"><label>Project Name</label><input type="text" id="mName" placeholder="CAR & Audit"></div>
     <div class="mf"><label>Scope (optional)</label><textarea id="mScope" placeholder="Standardize processes across EU..." style="min-height:60px"></textarea></div>
+    <div class="mf">
+      <label>Status</label>
+      <select id="mStatus" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;padding:10px 14px;outline:none">
+        <option value="Not Started">Not Started</option>
+        <option value="In WIP">In WIP</option>
+        <option value="Closed">Closed</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
     <div class="mbtns">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
       <button class="btn-save" onclick="saveProject()">Create</button>
@@ -347,14 +356,16 @@ async function loadProjects(){
     const c=document.createElement('div');
     c.className='pcard';
     const last=p.lastReport;
+    const statusColors={'Not Started':'#6b6b8a','In WIP':'#6c63ff','Closed':'#43e97b','Rejected':'#ff6584'};
+    const sc=statusColors[p.status]||'#6b6b8a';
+    const statusBadge=`<div style="display:inline-block;font-size:10px;padding:2px 10px;border-radius:20px;border:1px solid ${sc};color:${sc};margin-bottom:8px">${p.status||'Not Started'}</div>`;
     let semafor='';
-    let pctBadge='';
     if(last){
       const ms=last.milestone_status||{};
       const statuses=Object.values(ms);
       const oc=statuses.includes('red')?'#ef4444':statuses.includes('yellow')?'#eab308':'#22c55e';
       const pct=last.progress_pct||0;
-      semafor=`<div style="display:flex;align-items:center;gap:6px;margin-top:12px">
+      semafor=`<div style="display:flex;align-items:center;gap:6px;margin-top:10px">
         <div style="width:12px;height:12px;border-radius:50%;background:${oc};box-shadow:0 0 6px ${oc}"></div>
         <div style="width:12px;height:12px;border-radius:50%;background:#374151"></div>
         <div style="width:12px;height:12px;border-radius:50%;background:#374151"></div>
@@ -362,9 +373,9 @@ async function loadProjects(){
         <div style="font-size:10px;color:var(--text-dim);margin-left:4px">${last.report_date}</div>
       </div>`;
     }else{
-      semafor=`<div style="margin-top:12px;font-size:11px;color:var(--text-dim)">No reports yet</div>`;
+      semafor=`<div style="margin-top:8px;font-size:11px;color:var(--text-dim)">No reports yet</div>`;
     }
-    c.innerHTML=`<div class="pid">${p.project_id}</div><div class="pname">${p.project_name}</div><div class="pscope">${p.scope||'—'}</div>${semafor}<div class="phint" style="margin-top:8px">Open →</div>`;
+    c.innerHTML=`${statusBadge}<div class="pid">${p.project_id}</div><div class="pname">${p.project_name}</div><div class="pscope">${p.scope||'—'}</div>${semafor}<div class="phint" style="margin-top:8px">Open →</div>`;
     c.onclick=()=>openProject(p);
     g.appendChild(c);
   });
@@ -377,8 +388,9 @@ async function saveProject(){
   const project_id=document.getElementById('mId').value.trim();
   const project_name=document.getElementById('mName').value.trim();
   const scope=document.getElementById('mScope').value.trim();
+  const status=document.getElementById('mStatus').value;
   if(!project_id||!project_name)return;
-  await fetch(`${API}?action=save_project`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:user.id,project_id,project_name,scope})});
+  await fetch(`${API}?action=save_project`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:user.id,project_id,project_name,scope,status})});
   closeModal();
   ['mId','mName','mScope'].forEach(id=>document.getElementById(id).value='');
   await loadProjects();
